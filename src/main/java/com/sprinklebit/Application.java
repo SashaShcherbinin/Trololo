@@ -5,9 +5,7 @@ import com.sprinklebit.input.pojo.Parameters;
 import com.sprinklebit.input.pojo.Ride;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with Android Studio.
@@ -21,6 +19,7 @@ class Application {
     private static final String EXAMPLE_A_PATH = "a_example.in";
 
     private static List<Pair<Integer, Ride>> startToPointASteps = new ArrayList<>();
+    static Map<Integer, List<Ride>> resultMap = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -29,12 +28,22 @@ class Application {
         List<Ride> rides = inputData.getRides();
         sortRides(rides);
 
-        for (int i = 0; i < parameters.getVehicles(); i++) {
-            
-        }
+        addingCar(parameters);
 
         System.out.println(parameters);
 //        System.out.println(rides);
+    }
+
+    private static void addingCar(Parameters parameters) {
+        for (int i = 0; i < parameters.getVehicles(); i++) {
+            int car = i + 1;
+            List<Ride> rideList = resultMap.get(car);
+            if (rideList == null) {
+                rideList = new ArrayList<>();
+            }
+            rideList.add(startToPointASteps.get(i).getValue());
+            resultMap.put(car, rideList);
+        }
     }
 
     private static void sortRides(List<Ride> rides) {
