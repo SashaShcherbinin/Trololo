@@ -12,11 +12,11 @@ public class Ride {
 
     private int latestFinish;
 
-    public Ride(Point startPoint, Point finishPoint, int earliestStart, int latestFinish) {
-        this.startPoint = startPoint;
-        this.finishPoint = finishPoint;
-        this.earliestStart = earliestStart;
-        this.latestFinish = latestFinish;
+    public Ride(int[] parameters) {
+        startPoint = new Point(parameters[0], parameters[1]);
+        finishPoint = new Point(parameters[2], parameters[3]);
+        earliestStart = parameters[4];
+        latestFinish = parameters[5];
     }
 
     public Point getStartPoint() {
@@ -49,5 +49,10 @@ public class Ride {
 
     public void setLatestFinish(int latestFinish) {
         this.latestFinish = latestFinish;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }
