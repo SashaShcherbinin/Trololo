@@ -2,7 +2,7 @@ package com.sprinklebit.input.pojo;
 
 import java.awt.*;
 
-public class Ride {
+public class Ride implements Comparable<Ride> {
 
     private Point startPoint;
 
@@ -12,11 +12,18 @@ public class Ride {
 
     private int latestFinish;
 
+    private int distanceToZeroPoint;
+
     public Ride(int[] parameters) {
         startPoint = new Point(parameters[0], parameters[1]);
         finishPoint = new Point(parameters[2], parameters[3]);
         earliestStart = parameters[4];
         latestFinish = parameters[5];
+        calculateDistanceFromZeroPointToStartRide();
+    }
+
+    private void calculateDistanceFromZeroPointToStartRide() {
+        distanceToZeroPoint = startPoint.x + startPoint.y;
     }
 
     public Point getStartPoint() {
@@ -51,8 +58,18 @@ public class Ride {
         this.latestFinish = latestFinish;
     }
 
+    private int getDistanceToZeroPoint() {
+        return distanceToZeroPoint;
+    }
+
     @Override
-    public String toString() {
-        return super.toString();
+    public int compareTo(Ride o) {
+        if (this.distanceToZeroPoint > o.getDistanceToZeroPoint()) {
+            return 1;
+        } else if (this.distanceToZeroPoint == o.getDistanceToZeroPoint()) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 }
