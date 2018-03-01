@@ -58,7 +58,7 @@ public class Ride implements Comparable<Ride> {
         this.latestFinish = latestFinish;
     }
 
-    private int getDistanceToZeroPoint() {
+    public int getDistanceToZeroPoint() {
         return distanceToZeroPoint;
     }
 
