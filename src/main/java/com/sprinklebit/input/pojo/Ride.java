@@ -14,11 +14,14 @@ public class Ride implements Comparable<Ride> {
 
     private int distanceToZeroPoint;
 
-    public Ride(int[] parameters) {
+    private int rideId;
+
+    public Ride(int[] parameters, int rideId) {
         startPoint = new Point(parameters[0], parameters[1]);
         finishPoint = new Point(parameters[2], parameters[3]);
         earliestStart = parameters[4];
         latestFinish = parameters[5];
+        this.rideId = rideId;
         calculateDistanceFromZeroPointToStartRide();
     }
 
@@ -60,6 +63,10 @@ public class Ride implements Comparable<Ride> {
 
     public int getDistanceToZeroPoint() {
         return distanceToZeroPoint;
+    }
+
+    public int getRideId() {
+        return rideId;
     }
 
     @Override
