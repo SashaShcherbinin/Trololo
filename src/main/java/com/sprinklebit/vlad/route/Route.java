@@ -34,6 +34,7 @@ public class Route {
         return lastPoint;
     }
 
+
     private Ride getLastRide() {
         Ride lastRide = null;
 
