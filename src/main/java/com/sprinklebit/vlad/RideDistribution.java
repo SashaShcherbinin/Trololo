@@ -35,9 +35,18 @@ public class RideDistribution {
     private void initRoutes() {
         Route route = new Route();
 
-//        while ()
+        int currentStep = 0;
 
-        mUtils.getClosestRide(route.getLastPoint(), mRides, mParameters.getSteps());
+//        addRidesToRoute(route, )
+        
+
+
+
+        mUtils.getClosestRide(route.getLastPoint(), mRides, currentStep, mParameters.getSteps());
+
+    }
+
+    private void addRidesToRoute(Route route, int currentStep) {
 
     }
 

@@ -7,12 +7,11 @@ import java.util.List;
 
 public class Utils implements DistanceUtils {
 
-    public Ride getClosestRide(Point currentPoint, List<Ride> rides, int currentStep, int maxStepOffset) {
-        return null;
-    }
-
+    /**
+     * @return closest Ride. Null if we can't get new Ride in time
+     */
     @Override
-    public Ride getClosestRide(Point currentPoint, List<Ride> rides, int maxSteps) {
+    public Ride getClosestRide(Point currentPoint, List<Ride> rides, int currentStep, int maxSteps) {
         return null;
     }
 

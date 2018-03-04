@@ -16,8 +16,6 @@ public class Route {
 
     private List<Ride> mRides = new ArrayList<>();
 
-    private int mCurrentStep = 0;
-
     public void addRide(Ride ride) {
         mRides.add(ride);
     }
@@ -36,8 +34,11 @@ public class Route {
         return lastPoint;
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> aacd2376ec19a392928ce065459520848dfa7090
     private Ride getLastRide() {
         Ride lastRide = null;
 
