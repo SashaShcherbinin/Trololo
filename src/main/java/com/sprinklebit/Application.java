@@ -35,7 +35,7 @@ public class Application {
     private static Parameters parameters;
 
     public static void main(String[] args) {
-        InputData input = new InputData(EXAMPLE_A_PATH, new Utils());
+        InputData input = new InputData(EXAMPLE_E_PATH, new Utils());
         startStepa(input);
         startSasha(input);
     }
