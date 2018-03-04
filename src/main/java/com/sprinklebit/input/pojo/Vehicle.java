@@ -10,14 +10,14 @@ import java.awt.*;
  */
 
 
-public class Car {
+public class Vehicle {
 
     private Point point;
     private int number;
     private int leftSteps;
     private Ride ride;
 
-    public Car(Point point, int number) {
+    public Vehicle(Point point, int number) {
         this.point = point;
         this.number = number;
     }

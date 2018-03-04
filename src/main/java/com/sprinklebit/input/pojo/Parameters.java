@@ -2,22 +2,14 @@ package com.sprinklebit.input.pojo;
 
 public class Parameters {
 
-    private int[] rawParameters;
-
     private int rows;
-
     private int columns;
-
     private int vehicles;
-
     private int bonuses;
-
     private int rides;
-
     private int steps;
 
     public Parameters(int[] parameters) {
-        rawParameters = parameters;
         rows = parameters[0];
         columns = parameters[1];
         vehicles = parameters[2];

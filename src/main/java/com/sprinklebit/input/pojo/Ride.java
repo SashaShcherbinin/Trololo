@@ -5,16 +5,16 @@ import java.awt.*;
 public class Ride implements Comparable<Ride> {
 
     private Point startPoint;
-    private Point finishPoint;
+    private Point endPoint;
     private int earliestStart;
-    private int latestFinish;
+    private int latestEnd;
     private int number;
 
-    public Ride(Point startPoint, Point finishPoint, int earliestStart, int latestFinish, int number) {
+    public Ride(Point startPoint, Point endPoint, int earliestStart, int latestEnd, int number) {
         this.startPoint = startPoint;
-        this.finishPoint = finishPoint;
+        this.endPoint = endPoint;
         this.earliestStart = earliestStart;
-        this.latestFinish = latestFinish;
+        this.latestEnd = latestEnd;
         this.number = number;
     }
 
@@ -34,12 +34,12 @@ public class Ride implements Comparable<Ride> {
         this.startPoint = startPoint;
     }
 
-    public Point getFinishPoint() {
-        return finishPoint;
+    public Point getEndPoint() {
+        return endPoint;
     }
 
-    public void setFinishPoint(Point finishPoint) {
-        this.finishPoint = finishPoint;
+    public void setEndPoint(Point endPoint) {
+        this.endPoint = endPoint;
     }
 
     public int getEarliestStart() {
@@ -50,12 +50,12 @@ public class Ride implements Comparable<Ride> {
         this.earliestStart = earliestStart;
     }
 
-    public int getLatestFinish() {
-        return latestFinish;
+    public int getLatestEnd() {
+        return latestEnd;
     }
 
-    public void setLatestFinish(int latestFinish) {
-        this.latestFinish = latestFinish;
+    public void setLatestEnd(int latestEnd) {
+        this.latestEnd = latestEnd;
     }
 
     @Override

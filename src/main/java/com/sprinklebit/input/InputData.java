@@ -13,7 +13,6 @@ import java.util.List;
 public class InputData {
 
     private Parameters mParameters;
-
     private List<Ride> mRides = new ArrayList<>();
 
     public InputData(String path) {
@@ -29,7 +28,6 @@ public class InputData {
     }
 
     private void initInputData(String path) {
-
         try {
             FileReader fileReader = new FileReader(path);
             BufferedReader br = new BufferedReader(fileReader);
