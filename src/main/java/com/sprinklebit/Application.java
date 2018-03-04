@@ -1,9 +1,15 @@
 package com.sprinklebit;
 
+import com.sprinklebit.input.InputData;
 import com.sprinklebit.input.pojo.Parameters;
 import com.sprinklebit.input.pojo.Ride;
+import com.sprinklebit.stepa.Core;
+import com.sprinklebit.stepa.ResultWriter;
+import com.sprinklebit.stepa.StepaVehicle;
+import com.sprinklebit.vlad.Utils;
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +22,7 @@ import java.util.Map;
  * Time: 9:25 PM
  */
 
-class Application {
+public class Application {
 
     private static final String EXAMPLE_A_PATH = "a_example.in";
 
@@ -26,8 +32,25 @@ class Application {
     private static Parameters parameters;
 
     public static void main(String[] args) {
+        InputData input = new InputData(EXAMPLE_A_PATH, new Utils());
 
-    }
+        List<Ride> rides = input.getRides();
+
+        List<StepaVehicle> vehicles = new ArrayList<>();
+
+        for (int i=0; i<input.getParameters().getVehicles(); i++)
+        {
+            vehicles.add(new StepaVehicle(new Point(0,0), i, input.getParameters().getSteps()));
+        }
+
+        Core core = new Core(vehicles, rides, new ResultWriter());
+        core.calculateRides();
+        core.printData();
+
+        int score = core.calculateScore(input.getParameters().getSteps(), input.getParameters().getBonuses());
+
+        System.out.println("The score is " + score);
+        }
 
 //    private static void sortRides(List<Ride> rides) {
 //
