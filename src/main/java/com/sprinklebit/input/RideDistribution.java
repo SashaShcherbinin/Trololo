@@ -36,41 +36,49 @@ public class RideDistribution {
     public void start() {
         for (int step = 0; step < parameters.getSteps(); step++) {
 
-            for (int i = activeVehicles.size() - 1; i >= 0; i--) {
-                Vehicle activeVehicle = activeVehicles.get(i);
-                if (activeVehicle.getLeftSteps() == 0) {
-                    vehiclePool.add(activeVehicle);
-                    Vehicle vehicle = activeVehicles.remove(i);
-                    Ride ride = vehicle.getRide();
-                    int steps = getSteps(ride.getStartPoint(), vehicle.getRide().getEndPoint(), 0);
-                    if (step <= ride.getLatestEnd()) {
-                        score += steps;
-                    }
-                } else {
-                    activeVehicle.setLeftSteps(activeVehicle.getLeftSteps() - 1);
-                }
+            if (rides.size() == 0) {
+                continue;
             }
 
             while (!vehiclePool.isEmpty()) {
                 Vehicle vehicle = vehiclePool.poll();
 
                 Ride closestRide = getClosestRide(step, vehicle, rides);
-                if (closestRide == null) {
-                    break;
-                }
                 rides.remove(closestRide);
                 vehicle.setRide(closestRide);
                 int distance = getDistance(closestRide.getStartPoint(), closestRide.getEndPoint());
                 int distanceToPoint = getDistance(vehicle.getPoint(), closestRide.getStartPoint());
                 int earliestStart = closestRide.getEarliestStart() - step;
-                if (earliestStart == 0) {
-                    System.out.println("from earliest start");
-                }
                 if (earliestStart < 0) {
                     earliestStart = 0;
                 }
                 vehicle.setLeftSteps(distance + distanceToPoint + earliestStart);
                 activeVehicles.add(vehicle);
+            }
+
+
+            for (int i = activeVehicles.size() - 1; i >= 0; i--) {
+                Vehicle activeVehicle = activeVehicles.get(i);
+                if (activeVehicle.getLeftSteps() == 0) {
+                    activeVehicles.remove(i);
+                    vehiclePool.add(activeVehicle);
+                    Ride ride = activeVehicle.getRide();
+                    activeVehicle.setPoint(ride.getEndPoint());
+                    int steps = getSteps(ride.getStartPoint(), activeVehicle.getRide().getEndPoint(), 0);
+                    if (step <= ride.getLatestEnd()) {
+                        score += steps;
+                    }
+                    if (ride.getEarliestStart() == step) {
+                        System.out.println("from earliest start");
+                    }
+                } else {
+                    activeVehicle.setLeftSteps(activeVehicle.getLeftSteps() - 1);
+                }
+            }
+
+            if (activeVehicles.size() == 0) {
+                System.out.println("step = " + step);
+                break;
             }
         }
         System.out.println("rides left= " + rides.size());
@@ -87,7 +95,7 @@ public class RideDistribution {
             }
             int steps = getSteps(vehicle.getPoint(), ride.getStartPoint(), earliestStart);
             if (step < ride.getEarliestStart()) {
-                steps -= parameters.getBonuses();
+                steps = steps - parameters.getBonuses();
             }
             if (minSteps > steps) {
                 minSteps = steps;
