@@ -1,5 +1,8 @@
 package com.sprinklebit.input.pojo;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.awt.*;
 
 /**
@@ -9,7 +12,8 @@ import java.awt.*;
  * Time: 11:07 PM
  */
 
-
+@EqualsAndHashCode
+@ToString
 public class Vehicle {
 
     private Point point;

@@ -1,7 +1,12 @@
 package com.sprinklebit.input.pojo;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.awt.*;
 
+@EqualsAndHashCode
+@ToString
 public class Ride implements Comparable<Ride> {
 
     private Point startPoint;
