@@ -1,7 +1,10 @@
 package com.sprinklebit;
 
+import com.sprinklebit.input.InputData;
+import com.sprinklebit.input.RideDistribution;
 import com.sprinklebit.input.pojo.Parameters;
 import com.sprinklebit.input.pojo.Ride;
+import com.sprinklebit.vlad.Utils;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ import java.util.Map;
 class Application {
 
     private static final String EXAMPLE_A_PATH = "a_example.in";
+    private static final String EXAMPLE_B_PATH = "b_should_be_easy.in";
+    private static final String EXAMPLE_E_PATH = "e_high_bonus.in";
 
     private static List<Pair<Integer, Ride>> startToPointASteps = new ArrayList<>();
     static Map<Integer, List<Ride>> resultMap = new HashMap<>();
@@ -27,6 +32,9 @@ class Application {
 
     public static void main(String[] args) {
         System.out.println("Hello Stepan!!!");
+        InputData inputData = new InputData(EXAMPLE_E_PATH, new Utils());
+        RideDistribution rideDistribution = new RideDistribution(inputData.getRides(), inputData.getParameters());
+        rideDistribution.start();
     }
 
 //    private static void sortRides(List<Ride> rides) {

@@ -17,12 +17,13 @@ import java.util.concurrent.LinkedTransferQueue;
  * Time: 1:55 PM
  */
 
-class RideDistribution {
+public class RideDistribution {
 
     private Queue<Vehicle> vehiclePool = new LinkedTransferQueue<>();
     private List<Vehicle> activeVehicles = new ArrayList<>();
     private List<Ride> rides = new ArrayList<>();
     private Parameters parameters;
+    private int score;
 
     public RideDistribution(List<Ride> rides, Parameters parameters) {
         this.rides = rides;
@@ -39,7 +40,12 @@ class RideDistribution {
                 Vehicle activeVehicle = activeVehicles.get(i);
                 if (activeVehicle.getLeftSteps() == 0) {
                     vehiclePool.add(activeVehicle);
-                    activeVehicles.remove(i);
+                    Vehicle vehicle = activeVehicles.remove(i);
+                    Ride ride = vehicle.getRide();
+                    int steps = getSteps(ride.getStartPoint(), vehicle.getRide().getEndPoint(), 0);
+                    if (step <= ride.getLatestEnd()) {
+                        score += steps;
+                    }
                 } else {
                     activeVehicle.setLeftSteps(activeVehicle.getLeftSteps() - 1);
                 }
@@ -60,6 +66,7 @@ class RideDistribution {
                 activeVehicles.add(vehicle);
             }
         }
+        System.out.println("score = " + score);
     }
 
     public Ride getClosestRide(int step, Vehicle vehicle, List<Ride> rides) {
