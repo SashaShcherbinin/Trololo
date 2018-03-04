@@ -38,8 +38,10 @@ public class Application {
 
     public static void main(String[] args) {
         InputData input = new InputData(EXAMPLE_E_PATH, new Utils());
+
         startStepa(input);
 //        startSasha(input);
+
     }
 
     private static void startSasha(InputData inputData) {
