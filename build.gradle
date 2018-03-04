@@ -2,11 +2,19 @@ group 'com.sprinklebit'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.9
+targetCompatibility = 1.9
+
+mainClassName = 'com.sprinklebit.Application'
 
 repositories {
     mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3' //we want gradle 2.10 to run this project
 }
 
 dependencies {
@@ -14,3 +22,4 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.16.20'
 }
+
