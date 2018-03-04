@@ -55,10 +55,17 @@ public class RideDistribution {
                 Vehicle vehicle = vehiclePool.poll();
 
                 Ride closestRide = getClosestRide(step, vehicle, rides);
+                if (closestRide == null) {
+                    break;
+                }
+                rides.remove(closestRide);
                 vehicle.setRide(closestRide);
                 int distance = getDistance(closestRide.getStartPoint(), closestRide.getEndPoint());
                 int distanceToPoint = getDistance(vehicle.getPoint(), closestRide.getStartPoint());
                 int earliestStart = closestRide.getEarliestStart() - step;
+                if (earliestStart == 0) {
+                    System.out.println("from earliest start");
+                }
                 if (earliestStart < 0) {
                     earliestStart = 0;
                 }
@@ -66,20 +73,24 @@ public class RideDistribution {
                 activeVehicles.add(vehicle);
             }
         }
+        System.out.println("rides left= " + rides.size());
         System.out.println("score = " + score);
     }
 
     public Ride getClosestRide(int step, Vehicle vehicle, List<Ride> rides) {
-        int minDistance = Integer.MAX_VALUE;
+        int minSteps = Integer.MAX_VALUE;
         Ride closestRide = null;
         for (Ride ride : rides) {
             int earliestStart = ride.getEarliestStart() - step;
             if (earliestStart < 0) {
                 earliestStart = 0;
             }
-            int distance = getSteps(vehicle.getPoint(), ride.getStartPoint(), earliestStart);
-            if (minDistance > distance) {
-                minDistance = distance;
+            int steps = getSteps(vehicle.getPoint(), ride.getStartPoint(), earliestStart);
+            if (step < ride.getEarliestStart()) {
+                steps -= parameters.getBonuses();
+            }
+            if (minSteps > steps) {
+                minSteps = steps;
                 closestRide = ride;
             }
         }
