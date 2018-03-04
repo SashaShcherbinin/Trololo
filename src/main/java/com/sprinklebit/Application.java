@@ -26,7 +26,7 @@ class Application {
     private static Parameters parameters;
 
     public static void main(String[] args) {
-
+        System.out.println("Hello Stepan!!!");
     }
 
 //    private static void sortRides(List<Ride> rides) {
