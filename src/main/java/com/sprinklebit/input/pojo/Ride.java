@@ -5,28 +5,25 @@ import java.awt.*;
 public class Ride implements Comparable<Ride> {
 
     private Point startPoint;
-
     private Point finishPoint;
-
     private int earliestStart;
-
     private int latestFinish;
+    private int number;
 
-    private int distanceToZeroPoint;
-
-    private int rideId;
-
-    public Ride(int[] parameters, int rideId) {
-        startPoint = new Point(parameters[0], parameters[1]);
-        finishPoint = new Point(parameters[2], parameters[3]);
-        earliestStart = parameters[4];
-        latestFinish = parameters[5];
-        this.rideId = rideId;
-        calculateDistanceFromZeroPointToStartRide();
+    public Ride(Point startPoint, Point finishPoint, int earliestStart, int latestFinish, int number) {
+        this.startPoint = startPoint;
+        this.finishPoint = finishPoint;
+        this.earliestStart = earliestStart;
+        this.latestFinish = latestFinish;
+        this.number = number;
     }
 
-    private void calculateDistanceFromZeroPointToStartRide() {
-        distanceToZeroPoint = startPoint.x + startPoint.y;
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Point getStartPoint() {
@@ -61,22 +58,8 @@ public class Ride implements Comparable<Ride> {
         this.latestFinish = latestFinish;
     }
 
-    public int getDistanceToZeroPoint() {
-        return distanceToZeroPoint;
-    }
-
-    public int getRideId() {
-        return rideId;
-    }
-
     @Override
     public int compareTo(Ride o) {
-        if (this.distanceToZeroPoint > o.getDistanceToZeroPoint()) {
-            return 1;
-        } else if (this.distanceToZeroPoint == o.getDistanceToZeroPoint()) {
-            return 0;
-        } else {
-            return -1;
-        }
+        return 0;
     }
 }

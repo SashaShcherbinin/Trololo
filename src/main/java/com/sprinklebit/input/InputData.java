@@ -52,7 +52,7 @@ public class InputData {
                 if (lineNumber == firstLineIndex) {
                     mParameters = new Parameters(parametersAsIntArray);
                 } else {
-                    mRides.add(new Ride(parametersAsIntArray, lineNumber - 1));
+//                    mRides.add(new Ride(parametersAsIntArray, lineNumber - 1));
                 }
 
                 lineNumber++;
