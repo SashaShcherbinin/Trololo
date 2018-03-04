@@ -1,7 +1,9 @@
 package com.sprinklebit.stepa;
+import com.sprinklebit.input.InputData;
 import com.sprinklebit.input.pojo.Ride;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Core {
@@ -9,10 +11,22 @@ public class Core {
     private final List<Ride> rides;
     private final ResultWriter mResultWriter;
 
-    public Core(List<StepaVehicle> vechicles, List<Ride> rides, ResultWriter resultWriter) {
-        this.vehicles = vechicles;
-        this.rides = rides;
+    public Core(InputData input, ResultWriter resultWriter) {
+
         mResultWriter = resultWriter;
+        List<Ride> rides = input.getRides();
+
+        List<StepaVehicle> vehicles = new ArrayList<>();
+
+        for (int i=0; i<input.getParameters().getVehicles(); i++) {
+            StepaVehicle vehicle = new StepaVehicle(new Point(0,0), i+1, input.getParameters().getSteps());
+            vehicles.add(vehicle);
+            mResultWriter.addVehicle(vehicle.getNumber());
+        }
+
+        this.vehicles = vehicles;
+        this.rides = rides;
+
     }
 
     public void calculateRides() {

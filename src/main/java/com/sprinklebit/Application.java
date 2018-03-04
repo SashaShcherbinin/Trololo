@@ -27,6 +27,8 @@ public class Application {
 
     private static final String EXAMPLE_A_PATH = "a_example.in";
     private static final String EXAMPLE_B_PATH = "b_should_be_easy.in";
+    private static final String EXAMPLE_C_PATH = "c_no_hurry.in";
+    private static final String EXAMPLE_D_PATH = "d_metropolis.in";
     private static final String EXAMPLE_E_PATH = "e_high_bonus.in";
 
     private static List<Pair<Integer, Ride>> startToPointASteps = new ArrayList<>();
@@ -37,7 +39,7 @@ public class Application {
     public static void main(String[] args) {
         InputData input = new InputData(EXAMPLE_E_PATH, new Utils());
         startStepa(input);
-        startSasha(input);
+//        startSasha(input);
     }
 
     private static void startSasha(InputData inputData) {
@@ -58,17 +60,7 @@ public class Application {
         private static void startStepa(InputData input){
 
             System.out.println("Hello Stepan!!!");
-
-            List<Ride> rides = input.getRides();
-
-            List<StepaVehicle> vehicles = new ArrayList<>();
-
-            for (int i=0; i<input.getParameters().getVehicles(); i++)
-            {
-            vehicles.add(new StepaVehicle(new Point(0,0), i, input.getParameters().getSteps()));
-            }
-
-            Core core = new Core(vehicles, rides, new ResultWriter());
+            Core core = new Core(input, new ResultWriter());
             core.calculateRides();
             core.printData();
 
