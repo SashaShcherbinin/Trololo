@@ -2,7 +2,10 @@ package com.sprinklebit.input;
 
 import com.sprinklebit.input.pojo.Parameters;
 import com.sprinklebit.input.pojo.Ride;
+import com.sprinklebit.vlad.DistanceUtils;
+import com.sprinklebit.vlad.Utils;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,10 +15,12 @@ import java.util.List;
 
 public class InputData {
 
+    private DistanceUtils mUtils;
     private Parameters mParameters;
     private List<Ride> mRides = new ArrayList<>();
 
-    public InputData(String path) {
+    public InputData(String path, DistanceUtils distanceUtils) {
+        mUtils = distanceUtils;
         initInputData(path);
     }
 
@@ -50,7 +55,14 @@ public class InputData {
                 if (lineNumber == firstLineIndex) {
                     mParameters = new Parameters(parametersAsIntArray);
                 } else {
-//                    mRides.add(new Ride(parametersAsIntArray, lineNumber - 1));
+                    Point startPoint = new Point(parametersAsIntArray[0], parametersAsIntArray[1]);
+                    Point endPoint = new Point(parametersAsIntArray[2], parametersAsIntArray[3]);
+                    int earliestStart = parametersAsIntArray[4];
+                    int latestEnd = parametersAsIntArray[5];
+                    int number = lineNumber - 1;
+                    int distance = mUtils.getRideDistance(startPoint, endPoint);
+
+                    mRides.add(new Ride(startPoint, endPoint, earliestStart, latestEnd, number, distance));
                 }
 
                 lineNumber++;

@@ -7,20 +7,23 @@ import java.awt.*;
 
 @EqualsAndHashCode
 @ToString
-public class Ride implements Comparable<Ride> {
+public class  Ride implements Comparable<Ride> {
 
     private Point startPoint;
     private Point endPoint;
     private int earliestStart;
     private int latestEnd;
     private int number;
+    private int distance;
 
-    public Ride(Point startPoint, Point endPoint, int earliestStart, int latestEnd, int number) {
+    public Ride(Point startPoint, Point endPoint, int earliestStart,
+                int latestEnd, int number, int distance) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.earliestStart = earliestStart;
         this.latestEnd = latestEnd;
         this.number = number;
+        this.distance = distance;
     }
 
     public int getNumber() {
@@ -61,6 +64,10 @@ public class Ride implements Comparable<Ride> {
 
     public void setLatestEnd(int latestEnd) {
         this.latestEnd = latestEnd;
+    }
+
+    public int getDistance() {
+        return distance;
     }
 
     @Override
