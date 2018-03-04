@@ -1,8 +1,6 @@
 package com.sprinklebit;
 
-import com.sprinklebit.input.InputData;
 import com.sprinklebit.input.pojo.Parameters;
-import com.sprinklebit.input.pojo.Vehicle;
 import com.sprinklebit.input.pojo.Ride;
 import javafx.util.Pair;
 
@@ -25,16 +23,10 @@ class Application {
     private static List<Pair<Integer, Ride>> startToPointASteps = new ArrayList<>();
     static Map<Integer, List<Ride>> resultMap = new HashMap<>();
 
-    private static List<Vehicle> vehiclePool = new ArrayList<>();
-    private static List<Vehicle> activeVehicles = new ArrayList<>();
-    private static List<Ride> rides = new ArrayList<>();
-
     private static Parameters parameters;
 
     public static void main(String[] args) {
-        InputData inputData = new InputData("a_example.in");
-        rides = inputData.getRides();
-        parameters = inputData.getParameters();
+
     }
 
 //    private static void sortRides(List<Ride> rides) {
