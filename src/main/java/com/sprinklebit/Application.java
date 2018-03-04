@@ -1,9 +1,13 @@
 package com.sprinklebit;
 
+import com.sprinklebit.input.pojo.Car;
 import com.sprinklebit.input.pojo.Ride;
 import javafx.util.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with Android Studio.
@@ -18,6 +22,10 @@ class Application {
 
     private static List<Pair<Integer, Ride>> startToPointASteps = new ArrayList<>();
     static Map<Integer, List<Ride>> resultMap = new HashMap<>();
+
+    private List<Car> carPool = new ArrayList<>();
+    private List<Car> activeCars = new ArrayList<>();
+    private List<Ride> rides = new ArrayList<>();
 
     public static void main(String[] args) {
 
