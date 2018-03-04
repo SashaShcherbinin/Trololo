@@ -32,7 +32,9 @@ public class RideDistribution {
         this.parameters = parameters;
         resultWriter = new ResultWriter();
         for (int i = 0; i < parameters.getVehicles(); i++) {
-            vehiclePool.add(new Vehicle(new Point(0, 0), i + 1));
+            Vehicle e = new Vehicle(new Point(0, 0), i + 1);
+            vehiclePool.add(e);
+            resultWriter.addVehicle(e.getNumber());
         }
     }
 
@@ -100,7 +102,7 @@ public class RideDistribution {
             if (step <= ride.getEarliestStart()) {
                 steps = steps - parameters.getBonuses();
             } else {
-                System.out.println("more = " + step);
+//                System.out.println("more = " + step);
             }
             if (minSteps > steps) {
                 minSteps = steps;

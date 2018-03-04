@@ -1,16 +1,14 @@
 package com.sprinklebit;
 
 import com.sprinklebit.input.InputData;
+import com.sprinklebit.input.RideDistribution;
 import com.sprinklebit.input.pojo.Parameters;
 import com.sprinklebit.input.pojo.Ride;
 import com.sprinklebit.stepa.Core;
 import com.sprinklebit.stepa.ResultWriter;
-import com.sprinklebit.stepa.StepaVehicle;
-import com.sprinklebit.input.RideDistribution;
 import com.sprinklebit.vlad.Utils;
 import javafx.util.Pair;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +35,9 @@ public class Application {
     private static Parameters parameters;
 
     public static void main(String[] args) {
-        InputData input = new InputData(EXAMPLE_E_PATH, new Utils());
-
-        startStepa(input);
-//        startSasha(input);
-
+        InputData input = new InputData(EXAMPLE_B_PATH, new Utils());
+//        startStepa(input);
+        startSasha(input);
     }
 
     private static void startSasha(InputData inputData) {
