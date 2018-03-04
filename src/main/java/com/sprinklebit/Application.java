@@ -26,6 +26,7 @@ class Application {
     private static Parameters parameters;
 
     public static void main(String[] args) {
+        System.out.println("qweqweq");
 
     }
 

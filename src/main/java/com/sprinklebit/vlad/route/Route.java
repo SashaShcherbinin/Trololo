@@ -2,7 +2,6 @@ package com.sprinklebit.vlad.route;
 
 import com.sprinklebit.input.pojo.Ride;
 import com.sprinklebit.input.pojo.Vehicle;
-import jdk.internal.jline.internal.Nullable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,8 +15,6 @@ public class Route {
     private Vehicle mVehicle;
 
     private List<Ride> mRides = new ArrayList<>();
-
-    private int mCurrentStep = 0;
 
     public void addRide(Ride ride) {
         mRides.add(ride);
@@ -37,9 +34,6 @@ public class Route {
         return lastPoint;
     }
 
-
-
-    @Nullable
     private Ride getLastRide() {
         Ride lastRide = null;
 
