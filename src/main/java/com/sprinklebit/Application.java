@@ -3,9 +3,7 @@ package com.sprinklebit;
 import com.sprinklebit.input.InputData;
 import com.sprinklebit.input.pojo.Parameters;
 import com.sprinklebit.input.pojo.Ride;
-import com.sprinklebit.stepa.Core;
-import com.sprinklebit.stepa.ResultWriter;
-import com.sprinklebit.stepa.StepaVehicle;
+import com.sprinklebit.stepa.*;
 import com.sprinklebit.input.RideDistribution;
 import com.sprinklebit.vlad.Utils;
 import javafx.util.Pair;
@@ -36,7 +34,7 @@ public class Application {
 
     private static Parameters parameters;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         InputData input = new InputData(EXAMPLE_E_PATH, new Utils());
 
         startStepa(input);
@@ -59,15 +57,21 @@ public class Application {
 //            System.out.println("Ride added. Distance:" + ride.getDistanceToZeroPoint());
 //        }
 //    }
-        private static void startStepa(InputData input){
+        private static void startStepa(InputData input) throws CloneNotSupportedException {
 
             System.out.println("Hello Stepan!!!");
             Core core = new Core(input, new ResultWriter());
-            core.calculateRides();
+            core.generateRoutes();
             core.printData();
 
-            int score = core.calculateScore(input.getParameters().getSteps(), input.getParameters().getBonuses());
+            Score score = new Score(new InputData(EXAMPLE_E_PATH, new Utils()), new ResultReader("outResult_e.txt"));
+            ResultReader r = new ResultReader("outResult_e.txt");
+            int qty = 0;
+            for (StepaRoute route : r.getStepaRoutes()) {
+                qty = qty + route.getQty();
+            }
 
-            System.out.println("The score is " + score);
+            System.out.println("The score is " + qty);
+            System.out.println("The score is " + score.calculateScore());
         }
 }

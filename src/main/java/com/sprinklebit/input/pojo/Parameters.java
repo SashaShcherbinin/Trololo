@@ -1,9 +1,7 @@
 package com.sprinklebit.input.pojo;
 
 
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
 public class Parameters {
 
     private int rows;

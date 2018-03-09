@@ -7,19 +7,21 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepaVehicle extends Vehicle {
+public class StepaVehicle extends Vehicle implements Cloneable {
 
+    private final int bonus;
     private int maxSteps;
     private List<Ride> rides = new ArrayList<>();
     private int currentStep = 0;
 
-    public StepaVehicle(Point point, int number, int maxSteps) {
+    public StepaVehicle(Point point, int number, int maxSteps, int bonus) {
         super(point, number);
         this.maxSteps = maxSteps;
+        this.bonus = bonus;
     }
 
 
-    public Ride findBestRide(List<Ride> rides) {
+    public Ride findBestRide(List<Ride> rides) throws CloneNotSupportedException {
         Ride bestRide = null;
 
         for (Ride ride : rides) {
@@ -32,15 +34,30 @@ public class StepaVehicle extends Vehicle {
         return bestRide;
     }
 
-    private boolean isBetter(Ride ride, Ride bestRide) {
+    private boolean isBetter(Ride ride, Ride bestRide) throws CloneNotSupportedException {
         if (!isValid(ride)) {
             return false;
         }
 
+
+
         if (bestRide == null) {
             return true;
         } else {
-            if (calculateStartStep(ride) < calculateStartStep(bestRide)) {
+            //ToDo : add logic here
+//            int distanceRide = calculateStartStep(ride) - this.getCurrentStep();
+//            float deltaRide;
+//            float deltaBestRide;
+//            deltaRide = (float) calculatePoits(ride) / (float) (distanceRide + calculateDistance(ride.getStartPoint(), ride.getEndPoint()));
+//            int distanceBestRide = calculateStartStep(bestRide) - this.getCurrentStep();
+//            deltaBestRide = (float) calculatePoits(bestRide) / (float) (distanceBestRide + calculateDistance(ride.getStartPoint(), ride.getEndPoint()));
+//
+//
+//            if (deltaRide > deltaBestRide) {
+//                return true;
+//            }
+
+            if (calculatePoits(ride) > calculatePoits(bestRide)) {
                 return true;
             }
         }
@@ -48,31 +65,94 @@ public class StepaVehicle extends Vehicle {
         return false;
     }
 
-    private int calculateStartStep(Ride ride) {
-        int step = (int) (currentStep + Math.abs(ride.getStartPoint().getX() - getPoint().getX()) +
-                Math.abs(ride.getStartPoint().getY() - getPoint().getY()));
+    public int calculatePoits(Ride ride) throws CloneNotSupportedException {
+        StepaVehicle veh = (StepaVehicle) clone();
 
-        if (step < ride.getEarliestStart()) {
-            step = ride.getEarliestStart();
+        int points = 0;
+        int bonus = 0;
+        if (ride != null) {
+            int distanceToStart = veh.calculateDistance(veh.getPoint(), ride.getStartPoint());
+            if (veh.getCurrentStep() + distanceToStart < maxSteps) {
+                if (veh.getCurrentStep() + distanceToStart <= ride.getEarliestStart()) {
+                    veh.setCurrentStep(ride.getEarliestStart());
+                    veh.setPoint(ride.getStartPoint());
+                    bonus = this.bonus;
+                } else {
+                    veh.setCurrentStep(veh.getCurrentStep() + distanceToStart);
+                    veh.setPoint(ride.getStartPoint());
+                }
+            } else {
+                veh.setCurrentStep(maxSteps - 1);
+            }
+
+            int distanceToEnd = veh.calculateDistance(veh.getPoint(), ride.getEndPoint());
+            if (veh.getCurrentStep() + distanceToEnd < maxSteps) {
+                if (veh.getCurrentStep() + distanceToEnd <= ride.getLatestEnd()) {
+                    veh.setCurrentStep(veh.getCurrentStep() + distanceToEnd);
+                    veh.setPoint(ride.getEndPoint());
+                    points = distanceToEnd + bonus;
+                } else {
+                    veh.setCurrentStep(veh.getCurrentStep() + distanceToEnd);
+                    veh.setPoint(ride.getEndPoint());
+                }
+            } else {
+                veh.setCurrentStep(maxSteps - 1);
+            }
+        }
+        return points;
+    }
+
+    public int calculateStartStep(Ride ride) {
+        int step = 0;
+
+        if (ride == null) {
+            step = currentStep;
+        } else {
+            step = (int) (currentStep + Math.abs(ride.getStartPoint().getX() - getPoint().getX()) +
+                    Math.abs(ride.getStartPoint().getY() - getPoint().getY()));
+
+            if (step < ride.getEarliestStart()) {
+                step = ride.getEarliestStart();
+            }
         }
 
         return step;
     }
 
-    private boolean isValid(Ride ride) {
-        if (maxSteps > (int) (currentStep + Math.abs(ride.getStartPoint().getX() - getPoint().getX()) +
-                Math.abs(ride.getStartPoint().getY() - getPoint().getY()) + Math.abs(ride.getEndPoint().getX() - getPoint().getX()) +
-                Math.abs(ride.getEndPoint().getY() - getPoint().getY()))) {
-            return true;
+    private boolean isValid(Ride ride) throws CloneNotSupportedException {
+        StepaVehicle veh = (StepaVehicle) clone();
+
+        int distanceToStart = veh.calculateDistance(veh.getPoint(), ride.getStartPoint());
+        if (veh.getCurrentStep() + distanceToStart < maxSteps) {
+            if (veh.getCurrentStep() + distanceToStart <= ride.getEarliestStart()) {
+                veh.setCurrentStep(ride.getEarliestStart());
+                veh.setPoint(ride.getStartPoint());
+            } else {
+                veh.setCurrentStep(veh.getCurrentStep() + distanceToStart);
+                veh.setPoint(ride.getStartPoint());
+            }
+        } else {
+            return false;
         }
 
-        return false;
+        int distanceToEnd = veh.calculateDistance(veh.getPoint(), ride.getEndPoint());
+        if (veh.getCurrentStep() + distanceToEnd < maxSteps) {
+            if (veh.getCurrentStep() + distanceToEnd <= ride.getLatestEnd()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public void addRide(Ride bestRide) {
-        rides.add(bestRide);
-        calculateStep(bestRide);
-        setPoint(bestRide.getEndPoint());
+        if (bestRide != null) {
+            rides.add(bestRide);
+            calculateStep(bestRide);
+            setPoint(bestRide.getEndPoint());
+        }
     }
 
     private void calculateStep(Ride ride) {
@@ -113,6 +193,13 @@ public class StepaVehicle extends Vehicle {
         distance = (int) (Math.abs(ride.getEndPoint().getX() - ride.getStartPoint().getX()) +
                         Math.abs(ride.getEndPoint().getY() - ride.getStartPoint().getY()));
 
+        currentStep += distance;
+
         return distance;
+    }
+
+    public int calculateDistance(Point start, Point end) {
+        return (int) (Math.abs(start.getX() - end.getX()) +
+                Math.abs(start.getY() - end.getY()));
     }
 }
